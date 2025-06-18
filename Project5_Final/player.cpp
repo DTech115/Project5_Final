@@ -118,6 +118,9 @@ void player::UpdateSprites(int width, int height, int dir) {
 	if (dir == 0) { //left
 		animationDirection = 0;
 		x -= speed;
+		if (x < 0) {
+			x = 0;
+		}
 		if (curFrame < 7) {
 			if (++frameCount > frameDelay) {
 				frameCount = 0;
