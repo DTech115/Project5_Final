@@ -9,15 +9,13 @@ public:
 	player();
 	~player();
 	void DrawPlayer(int xoffset, int yoffset);
-	void MoveUp(int width, int height, int dir);
-	void MoveDown(int width, int height, int dir);
-	void MoveLeft(int width, int height, int dir);
-	void MoveRight(int width, int height, int dir);
+	void UpdateSprites(int width, int height, int dir); //dir 1 = right, 0 = left, 2 = up/down/idle
 	int getWidth() { return frameWidth; }
 	int getHeight() { return frameHeight; }
 	int getX() { return x; }
 	int getY() { return y; }
 	void removeLife() { lives--; }
+	void resetFrame() { curFrame = 0; }
 
 	int getLives() { return lives; }	// returns lives for lives check
 	void increaseScore() { score++; }	//increases score :]

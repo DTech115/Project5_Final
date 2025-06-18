@@ -27,7 +27,7 @@ int main()
 {
     
     const int numBullets = 10;
-    const int numEnemies = 10;
+    const int numEnemies = 1;
     enum KEYS { LEFT, RIGHT, UP, DOWN, SPACE };
     bool keys[5] = { false, false, false, false, false };
 
@@ -93,14 +93,27 @@ int main()
         {
             redraw = true;
 
-            if (keys[LEFT])
-                myPlayer.MoveLeft(WIDTH, HEIGHT, 0);
-            if (keys[RIGHT])
-                myPlayer.MoveRight(WIDTH, HEIGHT, 1);
-            if (keys[UP])
-                myPlayer.MoveUp(WIDTH, HEIGHT, 2);
-            if (keys[DOWN])
-                myPlayer.MoveDown(WIDTH, HEIGHT, 2);
+            bool idle = true;
+
+            if (keys[LEFT]) {
+                idle = false;
+                myPlayer.UpdateSprites(WIDTH, HEIGHT, 0);
+            }
+            if (keys[RIGHT]) {
+                idle = false;
+                myPlayer.UpdateSprites(WIDTH, HEIGHT, 1);
+            }
+            if (keys[UP]) {
+                idle = false;
+                myPlayer.UpdateSprites(WIDTH, HEIGHT, 2);
+            }
+            if (keys[DOWN]) {
+                idle = false;
+                myPlayer.UpdateSprites(WIDTH, HEIGHT, 3);
+            }
+            if (idle) {
+                myPlayer.UpdateSprites(WIDTH, HEIGHT, 4);
+            }
 
             for (int i = 0; i < numBullets; i++)
                 bullets[i].updateBullet(WIDTH, myPlayer);

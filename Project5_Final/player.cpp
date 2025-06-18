@@ -23,8 +23,8 @@ player::player()
 	curFrame = 0;
 	frameCount = 0;
 	frameDelay = 6;
-	frameWidth = 96;
-	frameHeight = 144;
+	frameWidth = 64;
+	frameHeight = 96;
 	animationColumns = 8;
 	animationDirection = 2;
 
@@ -48,17 +48,15 @@ void player::DrawPlayer(int xoffset, int yoffset)
 	int fx = (curFrame % animationColumns) * frameWidth;
 	int fy = 0;
 
-	if (animationDirection == 2) {//idle
-		fx = 0;
-		fy = 0;
-	}
-	else if (animationDirection == 0) {//left
-		fx = 0;
+	
+	if (animationDirection == 0) {//left
 		fy = frameHeight;
 	}
 	else if (animationDirection == 1) {//right
-		fx = 0;
 		fy = 2 * frameHeight;
+	}
+	else { //idle/up/down
+		fy = 0;
 	}
 
 	al_draw_bitmap_region(reimu, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
@@ -115,27 +113,63 @@ void player::DrawPlayer(int xoffset, int yoffset)
 	}*/
 }
 
-//converted to radians
-void player::MoveLeft(int width, int height, int dir)
-{
+void player::UpdateSprites(int width, int height, int dir) {
 
-	x -= speed;
-	if (x < 0)
-		x = 0;
-}
-void player::MoveRight(int width, int height, int dir)
-{
-	x += speed;
-	if (x > width - frameWidth)
-		x = width - frameWidth;
-}
-void player::MoveUp(int width, int height, int dir) {
-	y -= speed;
-	if (y < 400)
-		y = 400;
-}
-void player::MoveDown(int width, int height, int dir) {
-	y += speed;
-	if (y > height - frameHeight)
-		y = height - frameHeight;
+	if (dir == 0) { //left
+		animationDirection = 0;
+		x -= speed;
+		if (curFrame < 7) {
+			if (++frameCount > frameDelay) {
+				frameCount = 0;
+				curFrame++;
+			}
+		}
+		else {
+			curFrame == 8;
+		}
+	} else if (dir == 1) { //right
+		animationDirection = 1;
+		x += speed;
+		if (x > width - frameWidth)
+			x = width - frameWidth;
+
+		if (curFrame < 7) {
+			if (++frameCount > frameDelay)
+			{
+				frameCount = 0;
+				curFrame++;
+			}
+		}
+		else {
+			curFrame == 8;
+		}
+	} else if (dir == 2) {//up
+		animationDirection = 2;
+		y -= speed;
+		if (y < 0)
+			y = 0;
+		if (++frameCount > frameDelay) {
+			frameCount = 0;
+			if (++curFrame > 8)
+				curFrame = 1;
+		}
+	} else if (dir == 3) { // down
+		animationDirection = 2;
+		y += speed;
+		if (y > height - frameHeight)
+			y = height - frameHeight;
+		if (++frameCount > frameDelay) {
+			frameCount = 0;
+			if (++curFrame > 8)
+				curFrame = 1;
+		}
+	}
+	else {
+		animationDirection = 2;
+		if (++frameCount > frameDelay) {
+			frameCount = 0;
+			if (++curFrame > 8)
+				curFrame = 1;
+		}
+	}
 }
