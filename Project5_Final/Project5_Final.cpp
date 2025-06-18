@@ -27,7 +27,7 @@ int main()
 {
     
     const int numBullets = 10;
-    const int numEnemies = 1;
+    const int numEnemies = 10;
     enum KEYS { LEFT, RIGHT, UP, DOWN, SPACE };
     bool keys[5] = { false, false, false, false, false };
 

@@ -98,7 +98,8 @@ void player::DrawPlayer(int xoffset, int yoffset)
 		ly = 32;
 	}
 	else {
-
+		lx = 32;
+		ly = 0;
 	}
 	ALLEGRO_BITMAP* frameL = al_create_sub_bitmap(yinyangl, lx, ly, 32, 32);
 	al_draw_rotated_bitmap(frameL, 16, 16, x - 100, y, decorAngle, 0);
