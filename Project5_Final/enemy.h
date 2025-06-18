@@ -33,7 +33,6 @@ private:
     int frameHeight;
     int animationColumns;
     int animationRows;
-    int animationDirection;
 
 
     bool collided;

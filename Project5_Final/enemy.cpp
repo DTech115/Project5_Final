@@ -23,7 +23,6 @@ enemy::enemy()
 	frameWidth = 96;
 	frameHeight = 128;
 	animationColumns = 4;
-	animationDirection = 2;
 
 }
 enemy::~enemy()
@@ -36,7 +35,7 @@ void enemy::drawEnemy()
 {
 	if (live)
 	{
-		int fx = 0;
+		int fx = curFrame * frameWidth;
 		int fy = 0;
 
 		al_draw_bitmap_region(cirno, fx, fy, frameWidth, frameHeight, x, y, 0);
@@ -69,7 +68,7 @@ void enemy::updateEnemy()
 	
 	if (++frameCount > frameDelay) {
 		frameCount = 0;
-		if (++curFrame > 4)
+		if (++curFrame > 3)
 			curFrame = 0;
 	}
 
