@@ -64,15 +64,16 @@ void player::DrawPlayer(int xoffset, int yoffset)
 
 
 	// other properties
-
-	int lx = 0;
-	int ly = 0;
+	int lx = 0, ly = 0;
+	int rx = 0, ry = 0;
 
 	decorAngle += 0.2;
 
 	if (lives >= 6) {
 		lx = 0;
 		ly = 0;
+		rx = 0;
+		ry = 0;
 		/*al_draw_rotated_bitmap(yinyang, 32, 32, 500, 750, -decorAngle, 0);
 		al_draw_bitmap(giantseal, x - 250, y, 0);
 		al_draw_bitmap(giantseal, x + 270, y, 0);*/
@@ -80,30 +81,45 @@ void player::DrawPlayer(int xoffset, int yoffset)
 	else if (lives == 5) {
 		lx = 0;
 		ly = 32;
+		rx = 0;
+		ry = 64;
 	}
 	else if (lives == 4) {
 		lx = 32;
 		ly = 32;
+		rx = 32;
+		ry = 64;
 	}
 	else if (lives == 3) {
 		lx = 64;
 		ly = 32;
+		rx = 64;
+		ry = 64;
 	}
 	else if (lives == 2) {
 		lx = 96;
 		ly = 32;
+		rx = 96;
+		ry = 64;
 	}
 	else if (lives == 1) {
 		lx = 128;
 		ly = 32;
+		rx = 128;
+		ry = 64;
 	}
 	else {
 		lx = 32;
 		ly = 0;
+		rx = 32;
+		ry = 0;
 	}
 	ALLEGRO_BITMAP* frameL = al_create_sub_bitmap(yinyangl, lx, ly, 32, 32);
-	al_draw_rotated_bitmap(frameL, 16, 16, x - 100, y, decorAngle, 0);
+	ALLEGRO_BITMAP* frameR = al_create_sub_bitmap(yinyangl, rx, ry, 32, 32);
+	al_draw_rotated_bitmap(frameL, 16, 16, x - 50, y + 50, decorAngle, 0);
+	al_draw_rotated_bitmap(frameR, 16, 16, x + frameWidth + 40, y + 50, -decorAngle, 0);
 	al_destroy_bitmap(frameL);
+	al_destroy_bitmap(frameR);
 }
 
 void player::UpdateSprites(int width, int height, int dir) {
