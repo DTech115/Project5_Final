@@ -57,10 +57,10 @@ void enemy::collideEnemy(player& Player)
 {
 	if (live && !collided)
 	{
-		if (x - boundx < Player.getX() + Player.getBoundX() &&
-			x + boundx > Player.getX() - Player.getBoundX() &&
-			y - boundy < Player.getY() + Player.getBoundY() &&
-			y + boundy > Player.getY() - Player.getBoundY())
+		if (x - boundx < Player.getX() + Player.getWidth() &&
+			x + boundx > Player.getX() - Player.getWidth() &&
+			y - boundy < Player.getY() + Player.getHeight() &&
+			y + boundy > Player.getY() - Player.getHeight())
 		{
 			Player.removeLife();
 			collided = true;

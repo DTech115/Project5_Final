@@ -64,6 +64,9 @@ int main()
     bullet bullets[numBullets];
     enemy enemies[numEnemies];
 
+    int xOff = 0;
+    int yOff = 0;
+
     event_queue = al_create_event_queue();
     timer = al_create_timer(1.0 / FPS);
 
@@ -91,13 +94,13 @@ int main()
             redraw = true;
 
             if (keys[LEFT])
-                myPlayer.MoveLeft();
+                myPlayer.MoveLeft(WIDTH, HEIGHT, 0);
             if (keys[RIGHT])
-                myPlayer.MoveRight(WIDTH);
+                myPlayer.MoveRight(WIDTH, HEIGHT, 1);
             if (keys[UP])
-                myPlayer.MoveUp();
+                myPlayer.MoveUp(WIDTH, HEIGHT, 2);
             if (keys[DOWN])
-                myPlayer.MoveDown(HEIGHT);
+                myPlayer.MoveDown(WIDTH, HEIGHT, 2);
 
             for (int i = 0; i < numBullets; i++)
                 bullets[i].updateBullet(WIDTH, myPlayer);
@@ -177,7 +180,7 @@ int main()
             scrollBackground();
             al_draw_bitmap(moon, 140, 40, 0);
 
-            myPlayer.DrawPlayer();
+            myPlayer.DrawPlayer(xOff, yOff);
             for (int i = 0; i < numBullets; i++) {
                 bullets[i].drawBullet();
             }

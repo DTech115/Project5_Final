@@ -8,72 +8,64 @@
 player::~player()
 {
 	al_destroy_bitmap(reimu);
-	al_destroy_bitmap(yinyang);
-	al_destroy_bitmap(giantseal);
-
-	al_destroy_bitmap(giantsealL1);
-	al_destroy_bitmap(giantsealL2);
-	al_destroy_bitmap(giantsealL3);
-	al_destroy_bitmap(giantsealR1);
-	al_destroy_bitmap(giantsealR2);
-	al_destroy_bitmap(giantsealR3);
-	al_destroy_bitmap(giantsealR4);
-
-	al_destroy_bitmap(yinyangL1);
-	al_destroy_bitmap(yinyangL2);
-	al_destroy_bitmap(yinyangL3);
-	al_destroy_bitmap(yinyangL4);
-	al_destroy_bitmap(yinyangL5);
-	al_destroy_bitmap(yinyangR1);
-	al_destroy_bitmap(yinyangR2);
-	al_destroy_bitmap(yinyangR3);
-	al_destroy_bitmap(yinyangR4);
-	al_destroy_bitmap(yinyangR5);
-
-	al_destroy_bitmap(power);
+	/*al_destroy_bitmap(yinyang);
+	al_destroy_bitmap(giantseal1);
+	al_destroy_bitmap(giantseal2);
+	al_destroy_bitmap(dead);*/
 
 }
 player::player()
 {
-	reimu = al_load_bitmap("reimu.png");
-	yinyang = al_load_bitmap("yinyang.png");
-
-	yinyangL1 = al_load_bitmap("yinyangL1.png");
-	yinyangL2 = al_load_bitmap("yinyangL2.png");
-	yinyangL3 = al_load_bitmap("yinyangL3.png");
-	yinyangL4 = al_load_bitmap("yinyangL4.png");
-	yinyangL5 = al_load_bitmap("yinyangL5.png");
-	yinyangR1 = al_load_bitmap("yinyangR1.png");
-	yinyangR2 = al_load_bitmap("yinyangR2.png");
-	yinyangR3 = al_load_bitmap("yinyangR3.png");
-	yinyangR4 = al_load_bitmap("yinyangR4.png");
-	yinyangR5 = al_load_bitmap("yinyangR5.png");
-
-	giantseal = al_load_bitmap("giantseal.png");
-	giantsealL1 = al_load_bitmap("giantsealL1.png");
-	giantsealL2 = al_load_bitmap("giantsealL2.png");
-	giantsealL3 = al_load_bitmap("giantsealL3.png");
-	giantsealR1 = al_load_bitmap("giantsealR1.png");
-	giantsealR2 = al_load_bitmap("giantsealR2.png");
-	giantsealR3 = al_load_bitmap("giantsealR3.png");
-	giantsealR4 = al_load_bitmap("giantsealR4.png");
-
-	power = al_load_bitmap("power.png");
-
-	boundx = al_get_bitmap_width(reimu) * 0.2;
-	boundy = al_get_bitmap_height(reimu) * 0.3;
 	x = 355;
 	y = 650;
+
+	maxFrame = 24;
+	curFrame = 0;
+	frameCount = 0;
+	frameDelay = 6;
+	frameWidth = 96;
+	frameHeight = 144;
+	animationColumns = 8;
+	animationDirection = 2;
+
+	/*boundx = al_get_bitmap_width(reimu) * 0.2;
+	boundy = al_get_bitmap_height(reimu) * 0.3;*/
+	
 	lives = 6;
 	speed = 7;
 	score = 0;
+
+	reimu = al_load_bitmap("reimu_sheet.png");
+	/*yinyang = al_load_bitmap("yinyang_sheet.png");
+	giantseal1 = al_load_bitmap("seal_sheet.png");
+	giantseal2 = al_load_bitmap("seal_sheet.png");
+	dead = al_load_bitmap("dead.png");*/
 }
 
-void player::DrawPlayer()
+void player::DrawPlayer(int xoffset, int yoffset)
 {
+
+	int fx = (curFrame % animationColumns) * frameWidth;
+	int fy = 0;
+
+	if (animationDirection == 2) {//idle
+		fx = 0;
+		fy = 0;
+	}
+	else if (animationDirection == 0) {//left
+		fx = 0;
+		fy = frameHeight;
+	}
+	else if (animationDirection == 1) {//right
+		fx = 0;
+		fy = 2 * frameHeight;
+	}
+
+	al_draw_bitmap_region(reimu, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
+
 	decorAngle += 0.2;
 	//main sprite
-	if (lives >= 6) {
+	/*if (lives >= 6) {
 		al_draw_bitmap(reimu, x, y, 0);
 		al_draw_rotated_bitmap(yinyang, 32, 32, 300, 750, decorAngle, 0);
 		al_draw_rotated_bitmap(yinyang, 32, 32, 500, 750, -decorAngle, 0);
@@ -120,29 +112,30 @@ void player::DrawPlayer()
 		al_draw_bitmap(power, 385, 754, 0);
 		al_draw_bitmap(power, 390, 710, 0);
 
-	}
+	}*/
 }
 
 //converted to radians
-void player::MoveLeft()
+void player::MoveLeft(int width, int height, int dir)
 {
+
 	x -= speed;
 	if (x < 0)
 		x = 0;
 }
-void player::MoveRight(int WIDTH)
+void player::MoveRight(int width, int height, int dir)
 {
 	x += speed;
-	if (x > WIDTH - boundx)
-		x = WIDTH - boundx;
+	if (x > width - frameWidth)
+		x = width - frameWidth;
 }
-void player::MoveUp() {
+void player::MoveUp(int width, int height, int dir) {
 	y -= speed;
 	if (y < 400)
 		y = 400;
 }
-void player::MoveDown(int HEIGHT) {
+void player::MoveDown(int width, int height, int dir) {
 	y += speed;
-	if (y > HEIGHT - boundy)
-		y = HEIGHT - boundy;
+	if (y > height - frameHeight)
+		y = height - frameHeight;
 }
