@@ -8,9 +8,10 @@
 player::~player()
 {
 	al_destroy_bitmap(reimu);
-	/*al_destroy_bitmap(yinyang);
-	al_destroy_bitmap(giantseal1);
-	al_destroy_bitmap(giantseal2);
+	al_destroy_bitmap(yinyangl);
+	al_destroy_bitmap(yinyangr);
+	/*al_destroy_bitmap(giantseall);
+	al_destroy_bitmap(giantsealr);
 	al_destroy_bitmap(dead);*/
 
 }
@@ -36,8 +37,8 @@ player::player()
 	score = 0;
 
 	reimu = al_load_bitmap("reimu_sheet.png");
-	/*yinyang = al_load_bitmap("yinyang_sheet.png");
-	giantseal1 = al_load_bitmap("seal_sheet.png");
+	yinyangl = al_load_bitmap("yinyang_sheet.png");
+	/*giantseal1 = al_load_bitmap("seal_sheet.png");
 	giantseal2 = al_load_bitmap("seal_sheet.png");
 	dead = al_load_bitmap("dead.png");*/
 }
@@ -61,56 +62,47 @@ void player::DrawPlayer(int xoffset, int yoffset)
 
 	al_draw_bitmap_region(reimu, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
 
+
+	// other properties
+
+	int lx = 0;
+	int ly = 0;
+
 	decorAngle += 0.2;
-	//main sprite
-	/*if (lives >= 6) {
-		al_draw_bitmap(reimu, x, y, 0);
-		al_draw_rotated_bitmap(yinyang, 32, 32, 300, 750, decorAngle, 0);
-		al_draw_rotated_bitmap(yinyang, 32, 32, 500, 750, -decorAngle, 0);
+
+	if (lives >= 6) {
+		lx = 0;
+		ly = 0;
+		/*al_draw_rotated_bitmap(yinyang, 32, 32, 500, 750, -decorAngle, 0);
 		al_draw_bitmap(giantseal, x - 250, y, 0);
-		al_draw_bitmap(giantseal, x + 270, y, 0);
+		al_draw_bitmap(giantseal, x + 270, y, 0);*/
 	}
 	else if (lives == 5) {
-		al_draw_bitmap(reimu, x, y, 0);
-		al_draw_rotated_bitmap(yinyangL1, 32, 32, 300, 750, decorAngle, 0);
-		al_draw_rotated_bitmap(yinyangR1, 32, 32, 500, 750, -decorAngle, 0);
-		al_draw_bitmap(giantsealL1, x - 250, y, 0);
-		al_draw_bitmap(giantsealR1, x + 270, y, 0);
+		lx = 0;
+		ly = 32;
 	}
 	else if (lives == 4) {
-		al_draw_bitmap(reimu, x, y, 0);
-		al_draw_rotated_bitmap(yinyangL2, 32, 32, 300, 750, decorAngle, 0);
-		al_draw_rotated_bitmap(yinyangR2, 32, 32, 500, 750, -decorAngle, 0);
-		al_draw_bitmap(giantsealL2, x - 250, y, 0);
-		al_draw_bitmap(giantsealR2, x + 270, y, 0);
+		lx = 32;
+		ly = 32;
 	}
 	else if (lives == 3) {
-		al_draw_bitmap(reimu, x, y, 0);
-		al_draw_rotated_bitmap(yinyangL3, 32, 32, 300, 750, decorAngle, 0);
-		al_draw_rotated_bitmap(yinyangR3, 32, 32, 500, 750, -decorAngle, 0);
-		al_draw_bitmap(giantsealL3, x - 250, y, 0);
-		al_draw_bitmap(giantsealR3, x + 270, y, 0);
+		lx = 64;
+		ly = 32;
 	}
 	else if (lives == 2) {
-		al_draw_bitmap(reimu, x, y, 0);
-		al_draw_rotated_bitmap(yinyangL4, 32, 32, 300, 750, decorAngle, 0);
-		al_draw_rotated_bitmap(yinyangR4, 32, 32, 500, 750, -decorAngle, 0);
-		al_draw_bitmap(giantsealR4, x + 270, y, 0);
+		lx = 96;
+		ly = 32;
 	}
 	else if (lives == 1) {
-		al_draw_bitmap(reimu, x, y, 0);
-		al_draw_rotated_bitmap(yinyangL5, 32, 32, 300, 750, decorAngle, 0);
-		al_draw_rotated_bitmap(yinyangR5, 32, 32, 500, 750, -decorAngle, 0);
+		lx = 128;
+		ly = 32;
 	}
 	else {
-		al_draw_bitmap(power, 400, 760, 0);
-		al_draw_bitmap(power, 365, 750, 0);
-		al_draw_bitmap(power, 420, 690, 0);
-		al_draw_bitmap(power, 435, 730, 0);
-		al_draw_bitmap(power, 385, 754, 0);
-		al_draw_bitmap(power, 390, 710, 0);
 
-	}*/
+	}
+	ALLEGRO_BITMAP* frameL = al_create_sub_bitmap(yinyangl, lx, ly, 32, 32);
+	al_draw_rotated_bitmap(frameL, 16, 16, x - 100, y, decorAngle, 0);
+	al_destroy_bitmap(frameL);
 }
 
 void player::UpdateSprites(int width, int height, int dir) {

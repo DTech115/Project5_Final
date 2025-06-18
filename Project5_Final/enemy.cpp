@@ -4,6 +4,7 @@
 #include <allegro5\allegro_primitives.h>
 #include <allegro5\allegro_image.h>
 #include "enemy.h"
+#include <iostream>
 
 enemy::enemy()
 {
@@ -43,6 +44,10 @@ void enemy::startEnemy(int WIDTH, int HEIGHT)
 			y = -100;
 
 		}
+		/*else {
+			std::cout << "Fail :[ ";
+		}*/
+
 	}
 }
 
@@ -65,9 +70,9 @@ void enemy::collideEnemy(player& Player)
 			Player.removeLife();
 			collided = true;
 		}
-		else if (y > 800)
-		{
-			live = false;
-		}
+	}
+	if (y > 800)
+	{
+		live = false;
 	}
 }
