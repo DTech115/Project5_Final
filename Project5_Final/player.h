@@ -41,11 +41,9 @@ private:
 	float decorAngle = 0;
 
 	ALLEGRO_BITMAP* reimu;
-	ALLEGRO_BITMAP* yinyangl;
-	ALLEGRO_BITMAP* yinyangr;
-	/*ALLEGRO_BITMAP* giantseall;
-	ALLEGRO_BITMAP* giantsealr;
-	ALLEGRO_BITMAP* dead;*/
+	ALLEGRO_BITMAP* yinyang;
+	ALLEGRO_BITMAP* giantseal;
+	ALLEGRO_BITMAP* dead;
 
 };
 #endif

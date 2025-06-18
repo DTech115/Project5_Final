@@ -8,11 +8,9 @@
 player::~player()
 {
 	al_destroy_bitmap(reimu);
-	al_destroy_bitmap(yinyangl);
-	al_destroy_bitmap(yinyangr);
-	/*al_destroy_bitmap(giantseall);
-	al_destroy_bitmap(giantsealr);
-	al_destroy_bitmap(dead);*/
+	al_destroy_bitmap(yinyang);
+	al_destroy_bitmap(giantseal);
+	al_destroy_bitmap(dead);
 
 }
 player::player()
@@ -37,10 +35,9 @@ player::player()
 	score = 0;
 
 	reimu = al_load_bitmap("reimu_sheet.png");
-	yinyangl = al_load_bitmap("yinyang_sheet.png");
-	/*giantseal1 = al_load_bitmap("seal_sheet.png");
-	giantseal2 = al_load_bitmap("seal_sheet.png");
-	dead = al_load_bitmap("dead.png");*/
+	yinyang = al_load_bitmap("yinyang_sheet.png");
+	giantseal = al_load_bitmap("seal_sheet.png");
+	dead = al_load_bitmap("dead.png");
 }
 
 void player::DrawPlayer(int xoffset, int yoffset)
@@ -114,8 +111,8 @@ void player::DrawPlayer(int xoffset, int yoffset)
 		rx = 32;
 		ry = 0;
 	}
-	ALLEGRO_BITMAP* frameL = al_create_sub_bitmap(yinyangl, lx, ly, 32, 32);
-	ALLEGRO_BITMAP* frameR = al_create_sub_bitmap(yinyangl, rx, ry, 32, 32);
+	ALLEGRO_BITMAP* frameL = al_create_sub_bitmap(yinyang, lx, ly, 32, 32);
+	ALLEGRO_BITMAP* frameR = al_create_sub_bitmap(yinyang, rx, ry, 32, 32);
 	al_draw_rotated_bitmap(frameL, 16, 16, x - 50, y + 50, decorAngle, 0);
 	al_draw_rotated_bitmap(frameR, 16, 16, x + frameWidth + 40, y + 50, -decorAngle, 0);
 	al_destroy_bitmap(frameL);
