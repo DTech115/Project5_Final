@@ -56,6 +56,9 @@ int main()
     al_init_font_addon();
     al_init_ttf_addon();
 
+    al_init_primitives_addon();
+
+
     ALLEGRO_FONT* gameoverFont = al_load_font("DFPPOPCorn-W12.ttf", 64, 0);		//gameover font
     ALLEGRO_FONT* mainFont = al_load_font("DFPPOPCorn-W12.ttf", 32, 0);		//font
 

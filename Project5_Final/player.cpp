@@ -56,7 +56,6 @@ void player::DrawPlayer(int xoffset, int yoffset)
 	else { //idle/up/down
 		fy = 0;
 	}
-
 	al_draw_bitmap_region(reimu, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
 
 
@@ -79,8 +78,7 @@ void player::DrawPlayer(int xoffset, int yoffset)
 		sly = 0;
 		srx = 0;
 		sry = 0;
-		/*al_draw_bitmap(giantseal, x - 250, y, 0);
-		al_draw_bitmap(giantseal, x + 270, y, 0);*/
+		
 	}
 	else if (lives == 5) {
 		lx = 0;
@@ -143,10 +141,10 @@ void player::DrawPlayer(int xoffset, int yoffset)
 		rx = 32;
 		ry = 0;
 
-		slx = 295;
+		slx = 128;
 		sly = 0;
-		srx = 295;
-		sry = 256;
+		srx = 128;
+		sry = 0;
 	}
 	al_draw_bitmap_region(giantseal, slx, sly, 59, 128, 100, 650, 0);
 	al_draw_bitmap_region(giantseal, srx, sry, 59, 128, 625, 650, 0);

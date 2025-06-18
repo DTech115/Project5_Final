@@ -55,10 +55,10 @@ void bullet::collideBullet(enemy enemy[], player& Player, int cSize)
 		{
 			if (enemy[j].getLive())
 			{
-				if (x > (enemy[j].getX() - enemy[j].getBoundX()) &&
-					x < (enemy[j].getX() + enemy[j].getBoundX()) &&
-					y >(enemy[j].getY() - enemy[j].getBoundY()) &&
-					y < (enemy[j].getY() + enemy[j].getBoundY()))
+				if (x > (enemy[j].getX() - enemy[j].getWidth() / 2) &&
+					x < (enemy[j].getX() + enemy[j].getWidth() / 2) &&
+					y >(enemy[j].getY() - enemy[j].getHeight() / 2) &&
+					y < (enemy[j].getY() + enemy[j].getHeight() / 2))
 				{
 					live = false;
 					enemy[j].setLive(false);

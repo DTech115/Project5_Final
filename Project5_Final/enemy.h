@@ -11,8 +11,8 @@ public:
     void startEnemy(int WIDTH, int HEIGHT);
     void updateEnemy();
     void collideEnemy(player& Player);
-    int getBoundX() { return boundx; }
-    int getBoundY() { return boundy; }
+    int getWidth() { return frameWidth; }
+    int getHeight() { return frameHeight; }
     int getX() { return x; }
     int getY() { return y; }
     bool getLive() { return live; }
@@ -23,8 +23,19 @@ private:
     int y;
     bool live;
     int speed;
-    int boundx;
-    int boundy;
+    
+    //animation stuff
+    int maxFrame;
+    int curFrame;
+    int frameCount;
+    int frameDelay;
+    int frameWidth;
+    int frameHeight;
+    int animationColumns;
+    int animationRows;
+    int animationDirection;
+
+
     bool collided;
     ALLEGRO_BITMAP* cirno;
     ALLEGRO_BITMAP* cirno_dead;
