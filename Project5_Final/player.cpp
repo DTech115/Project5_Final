@@ -61,18 +61,25 @@ void player::DrawPlayer(int xoffset, int yoffset)
 
 
 	// other properties
-	int lx = 0, ly = 0;
+	int lx = 0, ly = 0; //	yinyang coords
 	int rx = 0, ry = 0;
 
-	decorAngle += 0.2;
+	int slx = 0, sly = 0; //	seal coords
+	int srx = 0, sry = 0;
+
+	angle += 0.2;	//for rotating yinyangs
 
 	if (lives >= 6) {
 		lx = 0;
 		ly = 0;
 		rx = 0;
 		ry = 0;
-		/*al_draw_rotated_bitmap(yinyang, 32, 32, 500, 750, -decorAngle, 0);
-		al_draw_bitmap(giantseal, x - 250, y, 0);
+
+		slx = 0;
+		sly = 0;
+		srx = 0;
+		sry = 0;
+		/*al_draw_bitmap(giantseal, x - 250, y, 0);
 		al_draw_bitmap(giantseal, x + 270, y, 0);*/
 	}
 	else if (lives == 5) {
@@ -80,41 +87,73 @@ void player::DrawPlayer(int xoffset, int yoffset)
 		ly = 32;
 		rx = 0;
 		ry = 64;
+
+		slx = 0;
+		sly = 128;
+		srx = 0;
+		sry = 256;
 	}
 	else if (lives == 4) {
 		lx = 32;
 		ly = 32;
 		rx = 32;
 		ry = 64;
+
+		slx = 59;
+		sly = 128;
+		srx = 59;
+		sry = 256;
 	}
 	else if (lives == 3) {
 		lx = 64;
 		ly = 32;
 		rx = 64;
 		ry = 64;
+
+		slx = 118;
+		sly = 128;
+		srx = 118;
+		sry = 256;
 	}
 	else if (lives == 2) {
 		lx = 96;
 		ly = 32;
 		rx = 96;
 		ry = 64;
+
+		slx = 177;
+		sly = 128;
+		srx = 177;
+		sry = 256;
 	}
 	else if (lives == 1) {
 		lx = 128;
 		ly = 32;
 		rx = 128;
 		ry = 64;
+
+		slx = 236;
+		sly = 128;
+		srx = 236;
+		sry = 256;
 	}
 	else {
 		lx = 32;
 		ly = 0;
 		rx = 32;
 		ry = 0;
+
+		slx = 295;
+		sly = 0;
+		srx = 295;
+		sry = 256;
 	}
+	al_draw_bitmap_region(giantseal, slx, sly, 59, 128, 100, 650, 0);
+	al_draw_bitmap_region(giantseal, srx, sry, 59, 128, 625, 650, 0);
 	ALLEGRO_BITMAP* frameL = al_create_sub_bitmap(yinyang, lx, ly, 32, 32);
 	ALLEGRO_BITMAP* frameR = al_create_sub_bitmap(yinyang, rx, ry, 32, 32);
-	al_draw_rotated_bitmap(frameL, 16, 16, x - 50, y + 50, decorAngle, 0);
-	al_draw_rotated_bitmap(frameR, 16, 16, x + frameWidth + 40, y + 50, -decorAngle, 0);
+	al_draw_rotated_bitmap(frameL, 16, 16, x - 50, y + 50, angle, 0);
+	al_draw_rotated_bitmap(frameR, 16, 16, x + frameWidth + 40, y + 50, -angle, 0);
 	al_destroy_bitmap(frameL);
 	al_destroy_bitmap(frameR);
 }

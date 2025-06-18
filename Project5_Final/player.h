@@ -38,7 +38,7 @@ private:
 	int animationRows;
 	int animationDirection;
 
-	float decorAngle = 0;
+	float angle = 0;
 
 	ALLEGRO_BITMAP* reimu;
 	ALLEGRO_BITMAP* yinyang;
