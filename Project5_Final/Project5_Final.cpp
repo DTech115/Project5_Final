@@ -8,6 +8,7 @@
 #include <allegro5/allegro_ttf.h>
 #include "player.h"
 #include "bullet.h"
+#include "boss.h"
 
 //moving background method!
 void scrollBackground();
@@ -70,6 +71,7 @@ int main()
     bullet bullets[numBullets];
     enemy enemies[enemiesStage1];
     enemy enemies2[enemiesStage2];
+    boss bigboss;
 
     int xOff = 0;
     int yOff = 0;
@@ -100,7 +102,7 @@ int main()
         if (ev.type == ALLEGRO_EVENT_TIMER)
         {
 
-            if (myPlayer.getScore() >= 15 && !stageOver) {
+            if (myPlayer.getScore() >= 40 && !stageOver) {
                 stage++;
                 std::cout << "Stage " << stage << std::endl;
                 stageOver = true;
@@ -130,6 +132,7 @@ int main()
                 myPlayer.UpdateSprites(WIDTH, HEIGHT, 4);
             }   //if not moving, player still animates
 
+            // spawns the proper enemies depending on stage!
             if (stage == 1) {
                 for (int i = 0; i < numBullets; i++)
                     bullets[i].updateBullet(WIDTH, myPlayer);
@@ -155,6 +158,16 @@ int main()
                 }
                 for (int i = 0; i < enemiesStage2; i++)
                     enemies2[i].collideEnemy(myPlayer);
+            }
+            else if (stage == 3) {
+                for (int i = 0; i < numBullets; i++)
+                    bullets[i].updateBullet(WIDTH, myPlayer);
+                bigboss.startBoss(WIDTH, HEIGHT);
+                bigboss.updateBoss();
+                for (int i = 0; i < numBullets; i++) {
+                    bullets[i].collideBullet(bigboss, myPlayer, numBullets);
+                }
+                bigboss.collideBoss(myPlayer);
             }
             
             if (myPlayer.getLives() <= 0) {

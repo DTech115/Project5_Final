@@ -2,6 +2,7 @@
 
 #include "player.h"
 #include "enemy.h"
+#include "boss.h"
 
 class bullet
 
@@ -13,6 +14,7 @@ public:
 	void fireBullet(player& player);
 	void updateBullet(int WIDTH, player& Player);
 	void collideBullet (enemy enemy[], player& Player, int cSize);
+	void collideBulletBoss(boss boss, player& Player);
 private:
 	int x;
 	int y;
