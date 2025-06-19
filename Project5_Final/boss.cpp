@@ -8,41 +8,43 @@
 
 boss::boss()
 {
-	bigboss = al_load_bitmap("cirno_sheet.png");
-	bigboss_dead = al_load_bitmap("cirno_dead.png");
+	x = 400;
+	y = 0;
+	remilia = al_load_bitmap("remilia_sheet.png");
+	remilia_dead = al_load_bitmap("dead.png");
 	alive = false;
 	lives = 500;
 	speed = 5;
 	state = DOWN;
 	pauseTimer = 0;
-
+	
 	maxFrame = 4;
 	curFrame = 0;
 	frameCount = 0;
-	frameDelay = 6;
+	frameDelay = 30;
 	frameWidth = 96;
-	frameHeight = 128;
+	frameHeight = 120;
 	animationColumns = 4;
+
 
 }
 boss::~boss()
 {
-	//al_destroy_bitmap(bigboss);
-	//al_destroy_bitmap(bigboss_dead);
+	al_destroy_bitmap(remilia);
+	al_destroy_bitmap(remilia_dead);
 }
 
 void boss::drawBoss()
 {
-	if (alive)
+	if (alive && lives >= 1)
 	{
 		int fx = curFrame * frameWidth;
 		int fy = 0;
 
-		al_draw_bitmap_region(bigboss, fx, fy, frameWidth, frameHeight, x, y, 0);
-
+		al_draw_bitmap_region(remilia, fx, fy, frameWidth, frameHeight, x, y, 0);
 	}
 	else {
-		al_draw_bitmap(bigboss_dead, x, y, 0);
+		al_draw_bitmap(remilia_dead, x, y, 0);
 	}
 }
 

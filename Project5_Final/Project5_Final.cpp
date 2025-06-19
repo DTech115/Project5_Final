@@ -105,12 +105,10 @@ int main()
 
             if (myPlayer.getScore() >= 3 && !stageOneOver) {
                 stage++;
-                std::cout << "Stage " << stage << std::endl;
                 stageOneOver = true;
             }
             if (myPlayer.getScore() >= 6 && !stageTwoOver) {
                 stage++;
-                std::cout << "Stage " << stage << std::endl;
                 stageTwoOver = true;
             }
 

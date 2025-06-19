@@ -59,8 +59,8 @@ void player::DrawPlayer(int xoffset, int yoffset)
 		fy = 0;
 	}
 	if (lives != 0) {
-		if (iframes && (iframeTimer % 10)) {
-
+		if (iframes && (iframeTimer % 10) < 5) {
+			//draw nothing for the flicker
 		}
 		else {
 			al_draw_bitmap_region(reimu, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);

@@ -42,6 +42,6 @@ private:
     int animationColumns;
     int animationRows;
 
-    ALLEGRO_BITMAP* bigboss;
-    ALLEGRO_BITMAP* bigboss_dead;
+    ALLEGRO_BITMAP* remilia;
+    ALLEGRO_BITMAP* remilia_dead;
 };

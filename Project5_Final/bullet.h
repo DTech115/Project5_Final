@@ -28,7 +28,6 @@ private:
 	int speed;
 	int boundx;
 	int boundy;
-	bool playerCollided;
 
 	ALLEGRO_BITMAP* seal;
 };

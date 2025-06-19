@@ -62,10 +62,8 @@ void bullet::fireBossBullet(boss& Boss) {
 void bullet::updateBossBullet(int WIDTH) {
 	if (live) {
 		y += speed;
-
 		if (y > 800) {
 			live = false;
-			playerCollided = false;
 		}
 	}
 }
@@ -118,7 +116,6 @@ void bullet::collideBulletBoss(boss& boss)
 		{
 			live = false;
 			boss.removeLife();
-			std::cout << "HP: " << boss.getLives() << "\n";
 		}
 	}
 
