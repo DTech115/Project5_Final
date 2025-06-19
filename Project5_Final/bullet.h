@@ -12,15 +12,19 @@ public:
 	~bullet();
 	void drawBullet();
 	void fireBullet(player& player);
-	void updateBullet(int WIDTH, player& Player);
+	void updateBullet(int WIDTH);
 	void collideBullet (enemy enemy[], player& Player, int cSize);
 	void collideBulletBoss(boss& boss);
+
+	void fireBossBullet(boss& boss);
+	void updateBossBullet(int WIDTH);
+	void collidePlayerBullet(player& Player, int cSize);
 private:
 	int x;
 	int y;
 	bool live;
 	int speed;
-	float radian_angle = 0;
+	float angle = 0;
 	int boundx;
 	int boundy;
 

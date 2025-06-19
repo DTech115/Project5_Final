@@ -27,7 +27,7 @@ const int HEIGHT = 800;
 int main()
 {
     
-    const int numBullets = 20;
+    const int numBullets = 40;
     const int enemiesStage1 = 10;
     const int enemiesStage2 = 20;
     enum KEYS { LEFT, RIGHT, UP, DOWN, SPACE };
@@ -69,9 +69,10 @@ int main()
     //object variables
     player myPlayer;
     bullet bullets[numBullets];
-    enemy enemies[enemiesStage1];
+    enemy enemies[enemiesStage1];   //different enemy types
     enemy enemies2[enemiesStage2];
-    boss bigboss;
+    boss bigboss;   // boss
+    bullet bossBullets[numBullets]; //boss fires back
 
     int xOff = 0;
     int yOff = 0;
@@ -140,7 +141,7 @@ int main()
             // spawns the proper enemies depending on stage!
             if (stage == 1) {
                 for (int i = 0; i < numBullets; i++)
-                    bullets[i].updateBullet(WIDTH, myPlayer);
+                    bullets[i].updateBullet(WIDTH);
                 for (int i = 0; i < enemiesStage1; i++)
                     enemies[i].startEnemy(WIDTH, HEIGHT);
                 for (int i = 0; i < enemiesStage1; i++)
@@ -153,7 +154,7 @@ int main()
             }
             else if (stage == 2) {
                 for (int i = 0; i < numBullets; i++)
-                    bullets[i].updateBullet(WIDTH, myPlayer);
+                    bullets[i].updateBullet(WIDTH);
                 for (int i = 0; i < enemiesStage2; i++)
                     enemies2[i].startEnemy(WIDTH, HEIGHT);
                 for (int i = 0; i < enemiesStage2; i++)
@@ -166,7 +167,7 @@ int main()
             }
             else if (stage == 3) {
                 for (int i = 0; i < numBullets; i++)
-                    bullets[i].updateBullet(WIDTH, myPlayer);
+                    bullets[i].updateBullet(WIDTH);
                 bigboss.startBoss(WIDTH, HEIGHT);
                 bigboss.updateBoss();
                 for (int i = 0; i < numBullets; i++) {
@@ -174,11 +175,16 @@ int main()
                 }
                 bigboss.collideBoss(myPlayer);
                 
+                for (int i = 0; i < numBullets; i++) {
+                    bossBullets[i].collidePlayerBullet(myPlayer, numBullets);
+                }
                 if (bigboss.getLives() <= 0) {
                     gameOver = true;
                 }
             }
-            
+            for (int i = 0; i < numBullets; i++)
+                bossBullets[i].fireBossBullet(bigboss);
+
             if (myPlayer.getLives() <= 0) {
                 gameOver = true;
             }
@@ -263,6 +269,9 @@ int main()
             }
             else if (stage == 3) {
                 bigboss.drawBoss();
+                for (int i = 0; i < numBullets; i++) {
+                    bossBullets[i].drawBullet();
+                }
             }
 
             if (gameOver) {	
