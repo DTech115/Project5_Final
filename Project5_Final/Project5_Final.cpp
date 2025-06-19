@@ -272,6 +272,7 @@ int main()
                 al_rest(5);
                 done = true;
             }
+            al_draw_textf(mainFont, al_map_rgb(255, 200, 255), 0, 0, 0, "STAGE %i", stage);
             al_flip_display();
             al_clear_to_color(al_map_rgb(0, 0, 0));
         }

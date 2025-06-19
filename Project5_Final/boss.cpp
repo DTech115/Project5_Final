@@ -52,7 +52,7 @@ void boss::startBoss(int WIDTH, int HEIGHT)
 	if (!alive) {
 		alive = true;
 		x = (WIDTH / 2) - frameWidth / 2;
-		y = -200;
+		y = -800;
 	}
 }
 
@@ -69,8 +69,8 @@ void boss::updateBoss()
 		break;
 	case LEFT:
 		x -= speed;
-		if (x <= 50) {
-			x = 50;
+		if (x <= 0) {
+			x = 0;
 			state = PAUSELEFT;
 			pauseTimer = 60; // pauses for 60 frames, or 1 second
 		}
@@ -82,8 +82,8 @@ void boss::updateBoss()
 		break;
 	case RIGHT:
 		x += speed;
-		if (x >= 750) {
-			x = 800;
+		if (x >= 800 - frameWidth) {
+			x = 800 - frameWidth;
 			state = PAUSERIGHT;
 			pauseTimer = 60; // 1 second pause
 		}
