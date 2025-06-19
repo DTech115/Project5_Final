@@ -42,8 +42,6 @@ private:
     int animationColumns;
     int animationRows;
 
-
-    bool collided;
     ALLEGRO_BITMAP* bigboss;
     ALLEGRO_BITMAP* bigboss_dead;
 };

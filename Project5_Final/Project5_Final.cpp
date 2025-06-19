@@ -170,6 +170,8 @@ int main()
                     bullets[i].updateBullet(WIDTH);
                 bigboss.startBoss(WIDTH, HEIGHT);
                 bigboss.updateBoss();
+                for (int i = 0; i < numBullets; i++)
+                    bossBullets[i].updateBossBullet(WIDTH);
                 for (int i = 0; i < numBullets; i++) {
                     bullets[i].collideBulletBoss(bigboss);
                 }

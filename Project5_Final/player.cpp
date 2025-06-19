@@ -33,6 +33,8 @@ player::player()
 	lives = 6;
 	speed = 7;
 	score = 0;
+	iframes = false;
+	iframeTimer = 0;
 
 	reimu = al_load_bitmap("reimu_sheet.png");
 	yinyang = al_load_bitmap("yinyang_sheet.png");
@@ -56,9 +58,14 @@ void player::DrawPlayer(int xoffset, int yoffset)
 	else { //idle/up/down
 		fy = 0;
 	}
-	if (lives != 0)
-		al_draw_bitmap_region(reimu, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
+	if (lives != 0) {
+		if (iframes && (iframeTimer % 10)) {
 
+		}
+		else {
+			al_draw_bitmap_region(reimu, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
+		}
+	}
 
 	// other properties
 	int lx = 0, ly = 0; //	yinyang coords
@@ -159,6 +166,14 @@ void player::DrawPlayer(int xoffset, int yoffset)
 }
 
 void player::UpdateSprites(int width, int height, int dir) {
+
+	//checks for iframes if just hit
+	if (iframes) {
+		iframeTimer--;
+		if (iframeTimer <= 0) {
+			iframes = false;
+		}
+	}
 
 	if (dir == 0) { //left
 		animationDirection = 0;

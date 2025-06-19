@@ -13,20 +13,22 @@ public:
 	void drawBullet();
 	void fireBullet(player& player);
 	void updateBullet(int WIDTH);
-	void collideBullet (enemy enemy[], player& Player, int cSize);
-	void collideBulletBoss(boss& boss);
 
-	void fireBossBullet(boss& boss);
+	void collideBullet (enemy enemy[], player& Player, int cSize);	//bullet collisions with enemies
+	void collideBulletBoss(boss& boss);	//bullet collisions with boss
+
+	void fireBossBullet(boss& boss);	//boss's bullet firing & updating
 	void updateBossBullet(int WIDTH);
-	void collidePlayerBullet(player& Player, int cSize);
+
+	void collidePlayerBullet(player& Player, int cSize);	//boss's bullet collisions with player
 private:
 	int x;
 	int y;
 	bool live;
 	int speed;
-	float angle = 0;
 	int boundx;
 	int boundy;
+	bool playerCollided;
 
 	ALLEGRO_BITMAP* seal;
 };

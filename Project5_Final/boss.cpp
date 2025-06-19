@@ -12,7 +12,6 @@ boss::boss()
 	bigboss_dead = al_load_bitmap("cirno_dead.png");
 	alive = false;
 	lives = 500;
-	collided = false;
 	speed = 5;
 	state = DOWN;
 	pauseTimer = 0;
@@ -105,7 +104,7 @@ void boss::updateBoss()
 }
 void boss::collideBoss(player& Player)
 {
-	if (alive && !collided)
+	if (alive)
 	{
 		if (x - frameWidth / 2 < Player.getX() + Player.getWidth() / 2 &&
 			x + frameWidth / 2 > Player.getX() - Player.getWidth() / 2 &&
@@ -113,7 +112,8 @@ void boss::collideBoss(player& Player)
 			y + frameHeight / 2 > Player.getY() - Player.getHeight() / 2)
 		{
 			Player.removeLife();
-			
+			Player.setiframes();
+			Player.setiframeTimer();
 		}
 	}
 }

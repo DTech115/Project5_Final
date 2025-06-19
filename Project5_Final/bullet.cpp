@@ -58,7 +58,6 @@ void bullet::fireBossBullet(boss& Boss) {
 
 		live = true;
 	}
-
 }
 void bullet::updateBossBullet(int WIDTH) {
 	if (live) {
@@ -66,11 +65,12 @@ void bullet::updateBossBullet(int WIDTH) {
 
 		if (y > 800) {
 			live = false;
+			playerCollided = false;
 		}
 	}
 }
 void bullet::collidePlayerBullet(player& Player, int cSize) {
-	if (live)
+	if (live && !Player.safe())
 	{
 		if (x > (Player.getX() - Player.getWidth() / 2) &&
 			x < (Player.getX() + Player.getWidth() / 2) &&
@@ -79,7 +79,8 @@ void bullet::collidePlayerBullet(player& Player, int cSize) {
 		{
 			live = false;
 			Player.removeLife();
-			std::cout << "HP: " << Player.getLives() << "\n";
+			Player.setiframes();
+			Player.setiframeTimer();
 		}
 	}
 }
@@ -110,7 +111,6 @@ void bullet::collideBulletBoss(boss& boss)
 {
 	if (live)
 	{
-		
 		if (x > (boss.getX() - boss.getWidth() / 2) &&
 			x < (boss.getX() + boss.getWidth() / 2) &&
 			y >(boss.getY() - boss.getHeight() / 2) &&

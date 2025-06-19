@@ -11,7 +11,6 @@ enemy::enemy()
 	cirno = al_load_bitmap("cirno_sheet.png");
 	cirno_dead = al_load_bitmap("cirno_dead.png");
 	live = false;
-	collided = false;
 	speed = 5;
 	/*boundx = al_get_bitmap_width(cirno) * .5;
 	boundy = al_get_bitmap_height(cirno) * .5;*/
@@ -63,7 +62,6 @@ void enemy::startEnemy(int WIDTH, int HEIGHT)
 
 void enemy::updateEnemy()
 {
-
 	y += speed;
 	
 	if (++frameCount > frameDelay) {
@@ -75,7 +73,7 @@ void enemy::updateEnemy()
 }
 void enemy::collideEnemy(player& Player)
 {
-	if (live && !collided)
+	if (live && !Player.safe())
 	{
 		if (x - frameWidth / 2 < Player.getX() + Player.getWidth() / 2 &&
 			x + frameWidth / 2 > Player.getX() - Player.getWidth() / 2 &&
@@ -83,7 +81,8 @@ void enemy::collideEnemy(player& Player)
 			y + frameHeight / 2 > Player.getY() - Player.getHeight() / 2)
 		{
 			Player.removeLife();
-			collided = true;
+			Player.setiframes();
+			Player.setiframeTimer();
 		}
 	}
 	if (y > 800)

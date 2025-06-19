@@ -34,8 +34,6 @@ private:
     int animationColumns;
     int animationRows;
 
-
-    bool collided;
     ALLEGRO_BITMAP* cirno;
     ALLEGRO_BITMAP* cirno_dead;
 };

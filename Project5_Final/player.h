@@ -20,12 +20,18 @@ public:
 	int getLives() { return lives; }	// returns lives for lives check
 	void increaseScore() { score++; }	//increases score :]
 	int getScore() { return score; }	//returns score!
+
+	bool safe() { return iframes; };
+	void setiframes() { iframes = true; }
+	void setiframeTimer() { iframeTimer = 60; }
 private:
 	int x;
 	int y;
 	int lives;
 	int speed;
 	int score;
+	bool iframes;	//for not getting hit too fast
+	int iframeTimer;
 
 	//animation stuff
 	int maxFrame;
