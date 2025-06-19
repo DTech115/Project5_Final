@@ -38,7 +38,7 @@ int main()
     bool redraw = true;
     const int FPS = 60;
     bool gameOver = false; //	gameover check for drawing gameover text
-    bool stageOver = false; //  //makes sure you only pass the stage once
+    bool stageOneOver = false, stageTwoOver = false; //  //makes sure you only pass the stage once
     int stage = 1;  //  which stage it is
 
     //Allegro variables
@@ -102,10 +102,15 @@ int main()
         if (ev.type == ALLEGRO_EVENT_TIMER)
         {
 
-            if (myPlayer.getScore() >= 40 && !stageOver) {
+            if (myPlayer.getScore() >= 3 && !stageOneOver) {
                 stage++;
                 std::cout << "Stage " << stage << std::endl;
-                stageOver = true;
+                stageOneOver = true;
+            }
+            if (myPlayer.getScore() >= 6 && !stageTwoOver) {
+                stage++;
+                std::cout << "Stage " << stage << std::endl;
+                stageTwoOver = true;
             }
 
             redraw = true;
@@ -165,14 +170,19 @@ int main()
                 bigboss.startBoss(WIDTH, HEIGHT);
                 bigboss.updateBoss();
                 for (int i = 0; i < numBullets; i++) {
-                    bullets[i].collideBullet(bigboss, myPlayer, numBullets);
+                    bullets[i].collideBulletBoss(bigboss);
                 }
                 bigboss.collideBoss(myPlayer);
+                
+                if (bigboss.getLives() <= 0) {
+                    gameOver = true;
+                }
             }
             
             if (myPlayer.getLives() <= 0) {
                 gameOver = true;
             }
+            
         }
         else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
         {
@@ -250,6 +260,9 @@ int main()
                 for (int i = 0; i < enemiesStage2; i++) {
                     enemies2[i].drawEnemy();
                 }
+            }
+            else if (stage == 3) {
+                bigboss.drawBoss();
             }
 
             if (gameOver) {	

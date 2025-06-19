@@ -14,7 +14,7 @@ public:
 	void fireBullet(player& player);
 	void updateBullet(int WIDTH, player& Player);
 	void collideBullet (enemy enemy[], player& Player, int cSize);
-	void collideBulletBoss(boss boss, player& Player);
+	void collideBulletBoss(boss& boss);
 private:
 	int x;
 	int y;
@@ -23,5 +23,6 @@ private:
 	float radian_angle = 0;
 	int boundx;
 	int boundy;
+
 	ALLEGRO_BITMAP* seal;
 };

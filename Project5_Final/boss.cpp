@@ -8,13 +8,14 @@
 
 boss::boss()
 {
-	cirno = al_load_bitmap("cirno_sheet.png");
-	cirno_dead = al_load_bitmap("cirno_dead.png");
-	live = false;
+	bigboss = al_load_bitmap("cirno_sheet.png");
+	bigboss_dead = al_load_bitmap("cirno_dead.png");
+	alive = false;
+	lives = 500;
 	collided = false;
 	speed = 5;
-	/*boundx = al_get_bitmap_width(cirno) * .5;
-	boundy = al_get_bitmap_height(cirno) * .5;*/
+	state = DOWN;
+	pauseTimer = 0;
 
 	maxFrame = 4;
 	curFrame = 0;
@@ -27,40 +28,74 @@ boss::boss()
 }
 boss::~boss()
 {
-	al_destroy_bitmap(cirno);
-	al_destroy_bitmap(cirno_dead);
+	//al_destroy_bitmap(bigboss);
+	//al_destroy_bitmap(bigboss_dead);
 }
 
 void boss::drawBoss()
 {
-	if (live)
+	if (alive)
 	{
 		int fx = curFrame * frameWidth;
 		int fy = 0;
 
-		al_draw_bitmap_region(cirno, fx, fy, frameWidth, frameHeight, x, y, 0);
+		al_draw_bitmap_region(bigboss, fx, fy, frameWidth, frameHeight, x, y, 0);
 
 	}
 	else {
-		al_draw_bitmap(cirno_dead, x, y, 0);
+		al_draw_bitmap(bigboss_dead, x, y, 0);
 	}
 }
 
 void boss::startBoss(int WIDTH, int HEIGHT)
 {
-	live = true;
-	x = (WIDTH/2) - frameWidth/2;
-	y = -400;
+	if (!alive) {
+		alive = true;
+		x = (WIDTH / 2) - frameWidth / 2;
+		y = -200;
+	}
 }
 
 void boss::updateBoss()
 {
-	collided = false;
-	y += speed;
-	if (y >= 100) {
-		y = 100;
+
+	switch (state) {
+	case DOWN:
+		y += speed;
+		if (y >= 100) {
+			y = 100;
+			state = LEFT;
+		}
+		break;
+	case LEFT:
+		x -= speed;
+		if (x <= 50) {
+			x = 50;
+			state = PAUSELEFT;
+			pauseTimer = 60; // pauses for 60 frames, or 1 second
+		}
+		break;
+	case PAUSELEFT:
+		if (--pauseTimer <= 0) {
+			state = RIGHT;
+		}
+		break;
+	case RIGHT:
+		x += speed;
+		if (x >= 750) {
+			x = 800;
+			state = PAUSERIGHT;
+			pauseTimer = 60; // 1 second pause
+		}
+		break;
+	case PAUSERIGHT:
+		if (--pauseTimer <= 0) {
+			state = LEFT;
+		}
+		break;
 	}
 
+	//animation
 	if (++frameCount > frameDelay) {
 		frameCount = 0;
 		if (++curFrame > 3)
@@ -70,7 +105,7 @@ void boss::updateBoss()
 }
 void boss::collideBoss(player& Player)
 {
-	if (live && !collided)
+	if (alive && !collided)
 	{
 		if (x - frameWidth / 2 < Player.getX() + Player.getWidth() / 2 &&
 			x + frameWidth / 2 > Player.getX() - Player.getWidth() / 2 &&
@@ -78,7 +113,7 @@ void boss::collideBoss(player& Player)
 			y + frameHeight / 2 > Player.getY() - Player.getHeight() / 2)
 		{
 			Player.removeLife();
-			collided = true;
+			
 		}
 	}
 }

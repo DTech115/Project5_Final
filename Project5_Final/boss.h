@@ -1,10 +1,14 @@
 //DT Nesimi
-
+#pragma once
 #include "player.h"
 
 class boss
 {
 public:
+    enum BossState {
+        DOWN, LEFT, PAUSELEFT, RIGHT, PAUSERIGHT
+    };
+
     boss();
     ~boss();
     void drawBoss();
@@ -15,14 +19,18 @@ public:
     int getHeight() { return frameHeight; }
     int getX() { return x; }
     int getY() { return y; }
-    bool getLive() { return live; }
-    void setLive(bool l) { live = l; }
+    int getLives() { return lives; }
+    void removeLife() { lives--; }
 
 private:
     int x;
     int y;
-    bool live;
+    bool alive;
+    int lives;
     int speed;
+
+    BossState state;
+    int pauseTimer;
 
     //animation stuff
     int maxFrame;
@@ -36,6 +44,6 @@ private:
 
 
     bool collided;
-    ALLEGRO_BITMAP* cirno;
-    ALLEGRO_BITMAP* cirno_dead;
+    ALLEGRO_BITMAP* bigboss;
+    ALLEGRO_BITMAP* bigboss_dead;
 };

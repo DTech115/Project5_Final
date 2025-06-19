@@ -5,6 +5,7 @@
 #include <allegro5\allegro_image.h>
 #include "bullet.h"
 #include <math.h>
+#include <iostream>
 
 bullet::bullet()
 {
@@ -65,6 +66,22 @@ void bullet::collideBullet(enemy enemy[], player& Player, int cSize)
 					Player.increaseScore();				// increases score upon hit!!!
 				}
 			}
+		}
+	}
+
+}
+void bullet::collideBulletBoss(boss& boss)
+{
+	if (live)
+	{
+		if (x > (boss.getX() - boss.getWidth() / 2) &&
+			x < (boss.getX() + boss.getWidth() / 2) &&
+			y >(boss.getY() - boss.getHeight() / 2) &&
+			y < (boss.getY() + boss.getHeight() / 2))
+		{
+			live = false;
+			boss.removeLife();
+			std::cout << "HP: " << boss.getLives() << "\n";
 		}
 	}
 
