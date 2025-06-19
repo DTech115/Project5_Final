@@ -27,7 +27,8 @@ int main()
 {
     
     const int numBullets = 10;
-    const int numEnemies = 10;
+    const int enemiesStage1 = 10;
+    const int enemiesStage2 = 20;
     enum KEYS { LEFT, RIGHT, UP, DOWN, SPACE };
     bool keys[5] = { false, false, false, false, false };
 
@@ -36,6 +37,8 @@ int main()
     bool redraw = true;
     const int FPS = 60;
     bool gameOver = false; //	gameover check for drawing gameover text
+    bool stageOver = false; //  //makes sure you only pass the stage once
+    int stage = 1;  //  which stage it is
 
     //Allegro variables
     ALLEGRO_DISPLAY* display = NULL;
@@ -65,7 +68,8 @@ int main()
     //object variables
     player myPlayer;
     bullet bullets[numBullets];
-    enemy enemies[numEnemies];
+    enemy enemies[enemiesStage1];
+    enemy enemies2[enemiesStage2];
 
     int xOff = 0;
     int yOff = 0;
@@ -87,6 +91,7 @@ int main()
     bg_y1 = 0;
     bg_y2 = -al_get_bitmap_height(bg);
 
+
     //game loop
     while (!done)
     {
@@ -94,9 +99,16 @@ int main()
         al_wait_for_event(event_queue, &ev);
         if (ev.type == ALLEGRO_EVENT_TIMER)
         {
+
+            if (myPlayer.getScore() >= 40 && !stageOver) {
+                stage++;
+                std::cout << "Stage 2!" << std::endl;
+                stageOver = true;
+            }
+
             redraw = true;
 
-            bool idle = true;
+            bool idle = true;   //checks if not moving
 
             if (keys[LEFT]) {
                 idle = false;
@@ -116,20 +128,35 @@ int main()
             }
             if (idle) {
                 myPlayer.UpdateSprites(WIDTH, HEIGHT, 4);
-            }
+            }   //if not moving, player still animates
 
-            for (int i = 0; i < numBullets; i++)
-                bullets[i].updateBullet(WIDTH, myPlayer);
-            for (int i = 0; i < numEnemies; i++)
-                enemies[i].startEnemy(WIDTH, HEIGHT);
-            for (int i = 0; i < numEnemies; i++)
-                enemies[i].updateEnemy();
-            for (int i = 0; i < numBullets; i++) {
-                bullets[i].collideBullet(enemies, myPlayer, numBullets);
+            if (stage == 1) {
+                for (int i = 0; i < numBullets; i++)
+                    bullets[i].updateBullet(WIDTH, myPlayer);
+                for (int i = 0; i < enemiesStage1; i++)
+                    enemies[i].startEnemy(WIDTH, HEIGHT);
+                for (int i = 0; i < enemiesStage1; i++)
+                    enemies[i].updateEnemy();
+                for (int i = 0; i < numBullets; i++) {
+                    bullets[i].collideBullet(enemies, myPlayer, numBullets);
+                }
+                for (int i = 0; i < enemiesStage1; i++)
+                    enemies[i].collideEnemy(myPlayer);
             }
-            for (int i = 0; i < numEnemies; i++)
-                enemies[i].collideEnemy(myPlayer);
-
+            else if (stage == 2) {
+                for (int i = 0; i < numBullets; i++)
+                    bullets[i].updateBullet(WIDTH, myPlayer);
+                for (int i = 0; i < enemiesStage2; i++)
+                    enemies2[i].startEnemy(WIDTH, HEIGHT);
+                for (int i = 0; i < enemiesStage2; i++)
+                    enemies2[i].updateEnemy();
+                for (int i = 0; i < numBullets; i++) {
+                    bullets[i].collideBullet(enemies2, myPlayer, numBullets);
+                }
+                for (int i = 0; i < enemiesStage2; i++)
+                    enemies2[i].collideEnemy(myPlayer);
+            }
+            
             if (myPlayer.getLives() <= 0) {
                 gameOver = true;
             }
@@ -200,9 +227,18 @@ int main()
             for (int i = 0; i < numBullets; i++) {
                 bullets[i].drawBullet();
             }
-            for (int i = 0; i < numEnemies; i++) {
-                enemies[i].drawEnemy();
+
+            if (stage == 1) {
+                for (int i = 0; i < enemiesStage1; i++) {
+                    enemies[i].drawEnemy();
+                }
             }
+            else if (stage == 2) {
+                for (int i = 0; i < enemiesStage2; i++) {
+                    enemies2[i].drawEnemy();
+                }
+            }
+
             if (gameOver) {	
                 al_draw_text(gameoverFont, al_map_rgb(0, 0, 200), WIDTH / 2, HEIGHT / 2, ALLEGRO_ALIGN_CENTER, "GAME OVER!");
                 al_draw_textf(mainFont, al_map_rgb(255, 255, 255), WIDTH / 2, (HEIGHT / 2) + 100, ALLEGRO_ALIGN_CENTER, "FAIRIES DEFEATED: %i", myPlayer.getScore());
