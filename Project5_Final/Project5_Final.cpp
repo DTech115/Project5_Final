@@ -26,7 +26,7 @@ const int HEIGHT = 800;
 int main()
 {
     
-    const int numBullets = 10;
+    const int numBullets = 20;
     const int enemiesStage1 = 10;
     const int enemiesStage2 = 20;
     enum KEYS { LEFT, RIGHT, UP, DOWN, SPACE };
@@ -100,9 +100,9 @@ int main()
         if (ev.type == ALLEGRO_EVENT_TIMER)
         {
 
-            if (myPlayer.getScore() >= 40 && !stageOver) {
+            if (myPlayer.getScore() >= 15 && !stageOver) {
                 stage++;
-                std::cout << "Stage 2!" << std::endl;
+                std::cout << "Stage " << stage << std::endl;
                 stageOver = true;
             }
 
