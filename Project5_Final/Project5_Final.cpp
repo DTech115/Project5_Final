@@ -52,6 +52,7 @@ int main()
     ALLEGRO_DISPLAY* display = NULL;
     ALLEGRO_EVENT_QUEUE* event_queue = NULL;
     ALLEGRO_TIMER* timer = NULL;
+    ALLEGRO_SAMPLE* music = NULL;
 
     //Initialization Functions
     if (!al_init())										//initialize Allegro
@@ -61,7 +62,16 @@ int main()
 
     if (!display)										//test display object
         return -1;
-
+    if (!al_install_audio()) {
+        return -1;
+    }
+    if (!al_init_acodec_addon()) {
+        return -1;
+    }
+    if (!al_reserve_samples(1)) {
+        return -1;
+    }
+    music = al_load_sample("septette.wav");
     al_install_keyboard();
     al_init_image_addon();
     al_init_font_addon();
@@ -102,6 +112,8 @@ int main()
     bg_y2 = -al_get_bitmap_height(bg);
 
     menuScreen = al_load_bitmap("menu.png");
+
+    al_play_sample(music, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 
     //game loop
     while (!done)
@@ -325,6 +337,7 @@ int main()
     al_destroy_font(mainFont);
     al_destroy_event_queue(event_queue);
     al_destroy_timer(timer);
+    al_destroy_sample(music);
     al_destroy_display(display);						//destroy our display object
     system("Pause");
     return 0;
