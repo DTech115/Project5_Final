@@ -47,6 +47,7 @@ void bullet::fireBullet(player& Player)
 		y = Player.getY();
 
 		live = true;
+		std::cout << "Firing sound: " << (shoot ? "VALID!" : "NULL!") << "\n";
 		al_play_sample(shoot, 1.0, 0.0, 0.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 	}
 }

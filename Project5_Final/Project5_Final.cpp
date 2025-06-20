@@ -222,7 +222,7 @@ int main()
                 }
                 if (bigboss.getLives() <= 0) {
                     victory = true;
-                    al_play_sample(remdead, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+                    al_play_sample(remdead, 0.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                 }
             }
             for (int i = 0; i < numBossBullets; i++)
@@ -230,7 +230,7 @@ int main()
 
             if (myPlayer.getLives() <= 0) {
                 gameOver = true;
-                al_play_sample(dead, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+                al_play_sample(dead, 0.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
             }
             
         }

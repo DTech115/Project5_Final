@@ -28,12 +28,14 @@ boss::boss()
 	frameHeight = 120;
 	animationColumns = 4;
 
+	hit = al_load_sample("hit.wav");
 
 }
 boss::~boss()
 {
 	al_destroy_bitmap(remilia);
 	al_destroy_bitmap(remilia_dead);
+	al_destroy_sample(hit);
 }
 
 void boss::drawBoss()
@@ -108,7 +110,7 @@ void boss::updateBoss()
 }
 void boss::collideBoss(player& Player)
 {
-	if (alive)
+	if (alive && !Player.safe())
 	{
 		if (x - frameWidth / 2 < Player.getX() + Player.getWidth() / 2 &&
 			x + frameWidth / 2 > Player.getX() - Player.getWidth() / 2 &&
@@ -118,6 +120,7 @@ void boss::collideBoss(player& Player)
 			Player.removeLife();
 			Player.setiframes();
 			Player.setiframeTimer();
+			al_play_sample(hit, 1.0, 0.0, 0.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 		}
 	}
 }

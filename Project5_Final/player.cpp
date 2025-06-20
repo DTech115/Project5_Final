@@ -28,9 +28,6 @@ player::player()
 	frameHeight = 96;
 	animationColumns = 8;
 	animationDirection = 2;
-
-	/*boundx = al_get_bitmap_width(reimu) * 0.2;
-	boundy = al_get_bitmap_height(reimu) * 0.3;*/
 	
 	lives = 6;
 	speed = 7;

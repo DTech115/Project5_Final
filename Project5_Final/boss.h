@@ -1,5 +1,6 @@
 //DT Nesimi
-#pragma once
+#ifndef BOSSH
+#define BOSSH
 #include <allegro5\allegro_audio.h>
 #include <allegro5\allegro_acodec.h>
 #include "player.h"
@@ -47,5 +48,6 @@ private:
     ALLEGRO_BITMAP* remilia;
     ALLEGRO_BITMAP* remilia_dead;
 
-    ALLEGRO_BITMAP* hit;
+    ALLEGRO_SAMPLE* hit;
 };
+#endif
