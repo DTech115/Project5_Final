@@ -82,7 +82,7 @@ int main()
     play = al_load_sample("play.wav");
     dead = al_load_sample("dead.wav");
     remdead = al_load_sample("remdead.wav");
-    
+    shoot = al_load_sample("shoot.wav");
 
     al_install_keyboard();
     al_init_image_addon();
@@ -272,7 +272,7 @@ int main()
                 keys[SPACE] = true;
                 for (int i = 0; i < numBullets; i++)
                     bullets[i].fireBullet(myPlayer);
-                al_play_sample(shoot, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);  //placeholder until I can get audio to play in classes
+                al_play_sample(shoot, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);  //placeholder until I can get audio to play in classes
                 break;
             }
         }
