@@ -52,7 +52,11 @@ int main()
     ALLEGRO_DISPLAY* display = NULL;
     ALLEGRO_EVENT_QUEUE* event_queue = NULL;
     ALLEGRO_TIMER* timer = NULL;
+    //AUDIO!
     ALLEGRO_SAMPLE* music = NULL;
+    ALLEGRO_SAMPLE* play = NULL;
+    ALLEGRO_SAMPLE* dead = NULL;
+    ALLEGRO_SAMPLE* remdead = NULL;
 
     //Initialization Functions
     if (!al_init())										//initialize Allegro
@@ -68,10 +72,14 @@ int main()
     if (!al_init_acodec_addon()) {
         return -1;
     }
-    if (!al_reserve_samples(1)) {
+    if (!al_reserve_samples(8)) {
         return -1;
     }
     music = al_load_sample("septette.wav");
+    play = al_load_sample("play.wav");
+    dead = al_load_sample("dead.wav");
+    remdead = al_load_sample("remdead.wav");
+    
     al_install_keyboard();
     al_init_image_addon();
     al_init_font_addon();
@@ -124,6 +132,7 @@ int main()
         if (menu) { //keeps menu up until key is pressed
             if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
                 menu = false;
+                al_play_sample(play, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
             }
             if (redraw && al_is_event_queue_empty(event_queue)) {
                 redraw = false;
@@ -213,6 +222,7 @@ int main()
                 }
                 if (bigboss.getLives() <= 0) {
                     victory = true;
+                    al_play_sample(remdead, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                 }
             }
             for (int i = 0; i < numBossBullets; i++)
@@ -220,6 +230,7 @@ int main()
 
             if (myPlayer.getLives() <= 0) {
                 gameOver = true;
+                al_play_sample(dead, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
             }
             
         }
