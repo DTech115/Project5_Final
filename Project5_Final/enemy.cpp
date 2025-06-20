@@ -3,6 +3,8 @@
 #include <allegro5\allegro.h>
 #include <allegro5\allegro_primitives.h>
 #include <allegro5\allegro_image.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include "enemy.h"
 #include <iostream>
 
@@ -12,8 +14,6 @@ enemy::enemy()
 	cirno_dead = al_load_bitmap("cirno_dead.png");
 	live = false;
 	speed = 5;
-	/*boundx = al_get_bitmap_width(cirno) * .5;
-	boundy = al_get_bitmap_height(cirno) * .5;*/
 
 	maxFrame = 4;
 	curFrame = 0;
@@ -23,11 +23,15 @@ enemy::enemy()
 	frameHeight = 128;
 	animationColumns = 4;
 
+	hit = al_load_sample("hit.wav");
+
 }
 enemy::~enemy()
 {
 	al_destroy_bitmap(cirno);
 	al_destroy_bitmap(cirno_dead);
+	al_destroy_sample(hit);
+
 }
 
 void enemy::drawEnemy()
@@ -83,6 +87,7 @@ void enemy::collideEnemy(player& Player)
 			Player.removeLife();
 			Player.setiframes();
 			Player.setiframeTimer();
+			al_play_sample(hit, 1.0, 0.0, 0.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 		}
 	}
 	if (y > 800)

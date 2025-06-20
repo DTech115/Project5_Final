@@ -35,17 +35,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="boss.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="bullet.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="enemy.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="player.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="boss.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

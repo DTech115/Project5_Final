@@ -1,5 +1,8 @@
 //DT Nesimi
-
+#ifndef ENEMYH
+#define ENEMYH
+#include <allegro5\allegro_audio.h>
+#include <allegro5\allegro_acodec.h>
 #include "player.h"
 
 class enemy
@@ -36,4 +39,7 @@ private:
 
     ALLEGRO_BITMAP* cirno;
     ALLEGRO_BITMAP* cirno_dead;
+
+    ALLEGRO_SAMPLE* hit;
 };
+#endif

@@ -1,5 +1,7 @@
 //DT Nesimi
 #pragma once
+#include <allegro5\allegro_audio.h>
+#include <allegro5\allegro_acodec.h>
 #include "player.h"
 
 class boss
@@ -44,4 +46,6 @@ private:
 
     ALLEGRO_BITMAP* remilia;
     ALLEGRO_BITMAP* remilia_dead;
+
+    ALLEGRO_BITMAP* hit;
 };

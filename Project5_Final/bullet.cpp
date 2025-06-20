@@ -3,8 +3,9 @@
 #include <allegro5\allegro.h>
 #include <allegro5\allegro_primitives.h>
 #include <allegro5\allegro_image.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include "bullet.h"
-#include <math.h>
 #include <iostream>
 
 bullet::bullet()
@@ -16,11 +17,21 @@ bullet::bullet()
 	orbFrame = 0;
 	seal = al_load_bitmap("seal.png");
 	orb = al_load_bitmap("orb_sheet.png");
+
+	hit = al_load_sample("hit.wav");
+	shoot = al_load_sample("shoot.wav");
+	remorb = al_load_sample("remorb.wav");
+	cirnodead = al_load_sample("cirnodead.wav");
 }
 bullet::~bullet()
 {
 	al_destroy_bitmap(seal);
 	al_destroy_bitmap(orb);
+
+	al_destroy_sample(hit);
+	al_destroy_sample(shoot);
+	al_destroy_sample(remorb);
+	al_destroy_sample(cirnodead);
 }
 void bullet::drawBullet()
 {
@@ -36,6 +47,7 @@ void bullet::fireBullet(player& Player)
 		y = Player.getY();
 
 		live = true;
+		al_play_sample(shoot, 1.0, 0.0, 0.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 	}
 }
 
@@ -67,6 +79,7 @@ void bullet::fireBossBullet(boss& Boss) {
 
 		orbFrame = rand() % 4;
 		live = true;
+		al_play_sample(remorb, 1.0, 0.0, 0.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 	}
 }
 void bullet::updateBossBullet(int WIDTH) {
@@ -89,6 +102,8 @@ void bullet::collidePlayerBullet(player& Player, int cSize) {
 			Player.removeLife();
 			Player.setiframes();
 			Player.setiframeTimer();
+			al_play_sample(hit, 1.0, 0.0, 0.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+
 		}
 	}
 }
@@ -109,6 +124,7 @@ void bullet::collideBullet(enemy enemy[], player& Player, int cSize)
 					live = false;
 					enemy[j].setLive(false);
 					Player.increaseScore();				// increases score upon hit!!!
+					al_play_sample(cirnodead, 1.0, 0.0, 0.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 				}
 			}
 		}

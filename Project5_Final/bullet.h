@@ -1,5 +1,6 @@
 //DT Nesimi
-
+#include <allegro5\allegro_audio.h>
+#include <allegro5\allegro_acodec.h>
 #include "player.h"
 #include "enemy.h"
 #include "boss.h"
@@ -32,4 +33,9 @@ private:
 
 	ALLEGRO_BITMAP* seal;
 	ALLEGRO_BITMAP* orb;
+
+	ALLEGRO_SAMPLE* hit;
+	ALLEGRO_SAMPLE* shoot;
+	ALLEGRO_SAMPLE* remorb;
+	ALLEGRO_SAMPLE* cirnodead;
 };
