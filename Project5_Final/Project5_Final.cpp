@@ -14,13 +14,14 @@
 void scrollBackground();
 void rotateMoon();
 
-//background global vars & dimensions
+//background & menu global vars & dimensions
 ALLEGRO_BITMAP* bg = NULL;
 ALLEGRO_BITMAP* moon = NULL;
 float bg_y1 = 0;
 float bg_y2 = 0;
 float scroll_speed = 2.0;
 float moonAngle = 0.0;
+ALLEGRO_BITMAP* menuScreen = NULL;
 
 const int WIDTH = 800;
 const int HEIGHT = 800;
@@ -36,10 +37,12 @@ int main()
     bool keys[5] = { false, false, false, false, false };
 
     //primitive variable
+    bool menu = true;  //for telling if its the menu
     bool done = false;
     bool redraw = true;
     const int FPS = 60;
     bool gameOver = false; //	gameover check for drawing gameover text
+    bool victory = false; //    checks if you actually WON!
     bool stageOneOver = false, stageTwoOver = false; //  //makes sure you only pass the stage once
     int stage = 1;  //  which stage it is
 
@@ -96,12 +99,26 @@ int main()
     bg_y1 = 0;
     bg_y2 = -al_get_bitmap_height(bg);
 
+    menuScreen = al_load_bitmap("menu.png");
 
     //game loop
     while (!done)
     {
         ALLEGRO_EVENT ev;
         al_wait_for_event(event_queue, &ev);
+
+        if (menu) { //keeps menu up until key is pressed
+            if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
+                menu = false;
+            }
+            if (redraw && al_is_event_queue_empty(event_queue)) {
+                redraw = false;
+
+                al_draw_bitmap(menuScreen, 0, 0, 0);
+                al_flip_display();
+            }
+            continue;
+        }
         if (ev.type == ALLEGRO_EVENT_TIMER)
         {
 
@@ -181,7 +198,7 @@ int main()
                     bossBullets[i].collidePlayerBullet(myPlayer, numBullets);
                 }
                 if (bigboss.getLives() <= 0) {
-                    gameOver = true;
+                    victory = true;
                 }
             }
             for (int i = 0; i < numBossBullets; i++)
@@ -284,6 +301,14 @@ int main()
                 al_draw_textf(mainFont, al_map_rgb(255, 255, 255), WIDTH / 2, (HEIGHT / 2) + 100, ALLEGRO_ALIGN_CENTER, "FAIRIES DEFEATED: %i", myPlayer.getScore());
                 al_flip_display();
                 al_rest(5);
+                done = true;
+            }
+            if (victory) {
+                al_draw_text(gameoverFont, al_map_rgb(0, 0, 200), WIDTH / 2, HEIGHT / 2, ALLEGRO_ALIGN_CENTER, "VICTORY ACHIEVED!");
+                al_draw_text(mainFont, al_map_rgb(255, 255, 255), WIDTH / 2, (HEIGHT / 2) + 100, ALLEGRO_ALIGN_CENTER, "YOU'VE DEFEATED REMILIA SCARLET!");
+                al_draw_textf(mainFont, al_map_rgb(255, 255, 255), WIDTH / 2, (HEIGHT / 2) + 150, ALLEGRO_ALIGN_CENTER, "FAIRIES DEFEATED: %i", myPlayer.getScore());
+                al_flip_display();
+                al_rest(10);
                 done = true;
             }
             al_draw_textf(mainFont, al_map_rgb(255, 200, 255), 0, 0, 0, "STAGE %i", stage);
