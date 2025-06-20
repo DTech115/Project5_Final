@@ -12,6 +12,7 @@
 
 //moving background method!
 void scrollBackground();
+void rotateMoon();
 
 //background global vars & dimensions
 ALLEGRO_BITMAP* bg = NULL;
@@ -19,7 +20,7 @@ ALLEGRO_BITMAP* moon = NULL;
 float bg_y1 = 0;
 float bg_y2 = 0;
 float scroll_speed = 2.0;
-//float moonAngle = 0.0;
+float moonAngle = 0.0;
 
 const int WIDTH = 800;
 const int HEIGHT = 800;
@@ -252,6 +253,9 @@ int main()
             //background draw
             scrollBackground();
             al_draw_bitmap(moon, 140, 40, 0);
+            if (stage == 3) {
+                rotateMoon();
+            }
 
             myPlayer.DrawPlayer(xOff, yOff);
             for (int i = 0; i < numBullets; i++) {
@@ -305,7 +309,6 @@ void scrollBackground() {
     // move both backgrounds down
     bg_y1 += scroll_speed;
     bg_y2 += scroll_speed;
-    //moonAngle += 0.007;
 
     // reset if they're off screen
     if (bg_y1 >= HEIGHT)
@@ -315,6 +318,8 @@ void scrollBackground() {
 
     al_draw_bitmap(bg, 0, bg_y1, 0);
     al_draw_bitmap(bg, 0, bg_y2, 0);
-    //al_draw_rotated_bitmap(moon, al_get_bitmap_width(moon) / 2.0, al_get_bitmap_width(moon) / 2.0, 400, 300, moonAngle, 0);
-
+}
+void rotateMoon() {
+    moonAngle += 0.007;
+    al_draw_rotated_bitmap(moon, al_get_bitmap_width(moon) / 2.0, al_get_bitmap_width(moon) / 2.0, 400, 300, moonAngle, 0);
 }

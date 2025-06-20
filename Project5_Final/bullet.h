@@ -28,7 +28,7 @@ private:
 	bool live;
 	int speed;
 
-	int orbFrame;
+	int orbFrame;	//for random choosing of colored orb projectile
 
 	ALLEGRO_BITMAP* seal;
 	ALLEGRO_BITMAP* orb;
