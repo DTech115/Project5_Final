@@ -13,13 +13,14 @@ bullet::bullet()
 	y = 700;
 	speed = 15;
 	live = false;
+	orbFrame = 0;
 	seal = al_load_bitmap("seal.png");
-	boundx = al_get_bitmap_width(seal);
-	boundy = al_get_bitmap_height(seal);
+	orb = al_load_bitmap("orb_sheet.png");
 }
 bullet::~bullet()
 {
 	al_destroy_bitmap(seal);
+	al_destroy_bitmap(orb);
 }
 void bullet::drawBullet()
 {
@@ -48,14 +49,23 @@ void bullet::updateBullet(int WIDTH)
 			live = false;
 	}
 }
+void bullet::drawBossBullet()
+{
+	if (live) {
+		int fx = orbFrame * 64;
+		int fy = 0;
 
+		al_draw_bitmap_region(orb, fx, fy, 64, 64, x + 10, y, 0);
+	}
+}
 void bullet::fireBossBullet(boss& Boss) {
-	
+	//shoots an orb of a random dimension from the sheet
 	if (!live)
 	{
 		x = Boss.getX();
 		y = Boss.getY();
 
+		orbFrame = rand() % 4;
 		live = true;
 	}
 }

@@ -11,6 +11,7 @@ public:
 	bullet();
 	~bullet();
 	void drawBullet();
+	void drawBossBullet();
 	void fireBullet(player& player);
 	void updateBullet(int WIDTH);
 
@@ -26,8 +27,9 @@ private:
 	int y;
 	bool live;
 	int speed;
-	int boundx;
-	int boundy;
+
+	int orbFrame;
 
 	ALLEGRO_BITMAP* seal;
+	ALLEGRO_BITMAP* orb;
 };

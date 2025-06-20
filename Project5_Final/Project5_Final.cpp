@@ -27,7 +27,8 @@ const int HEIGHT = 800;
 int main()
 {
     
-    const int numBullets = 40;
+    const int numBullets = 20;
+    const int numBossBullets = 20;
     const int enemiesStage1 = 10;
     const int enemiesStage2 = 20;
     enum KEYS { LEFT, RIGHT, UP, DOWN, SPACE };
@@ -72,7 +73,7 @@ int main()
     enemy enemies[enemiesStage1];   //different enemy types
     enemy enemies2[enemiesStage2];
     boss bigboss;   // boss
-    bullet bossBullets[numBullets]; //boss fires back
+    bullet bossBullets[numBossBullets]; //boss fires back
 
     int xOff = 0;
     int yOff = 0;
@@ -168,21 +169,21 @@ int main()
                     bullets[i].updateBullet(WIDTH);
                 bigboss.startBoss(WIDTH, HEIGHT);
                 bigboss.updateBoss();
-                for (int i = 0; i < numBullets; i++)
+                for (int i = 0; i < numBossBullets; i++)
                     bossBullets[i].updateBossBullet(WIDTH);
                 for (int i = 0; i < numBullets; i++) {
                     bullets[i].collideBulletBoss(bigboss);
                 }
                 bigboss.collideBoss(myPlayer);
                 
-                for (int i = 0; i < numBullets; i++) {
+                for (int i = 0; i < numBossBullets; i++) {
                     bossBullets[i].collidePlayerBullet(myPlayer, numBullets);
                 }
                 if (bigboss.getLives() <= 0) {
                     gameOver = true;
                 }
             }
-            for (int i = 0; i < numBullets; i++)
+            for (int i = 0; i < numBossBullets; i++)
                 bossBullets[i].fireBossBullet(bigboss);
 
             if (myPlayer.getLives() <= 0) {
@@ -269,8 +270,8 @@ int main()
             }
             else if (stage == 3) {
                 bigboss.drawBoss();
-                for (int i = 0; i < numBullets; i++) {
-                    bossBullets[i].drawBullet();
+                for (int i = 0; i < numBossBullets; i++) {
+                    bossBullets[i].drawBossBullet();
                 }
             }
 
