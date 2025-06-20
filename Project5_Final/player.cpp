@@ -66,7 +66,7 @@ void player::DrawPlayer(int xoffset, int yoffset)
 		}
 	}
 
-	// other properties
+	// other properties like the yin yangs & talismans
 	int lx = 0, ly = 0; //	yinyang coords
 	int rx = 0, ry = 0;
 
@@ -156,6 +156,7 @@ void player::DrawPlayer(int xoffset, int yoffset)
 	}
 	al_draw_bitmap_region(giantseal, slx, sly, 59, 128, 100, 650, 0);
 	al_draw_bitmap_region(giantseal, srx, sry, 59, 128, 625, 650, 0);
+	// this way, we grab the bitmap region & then rotate it
 	ALLEGRO_BITMAP* frameL = al_create_sub_bitmap(yinyang, lx, ly, 32, 32);
 	ALLEGRO_BITMAP* frameR = al_create_sub_bitmap(yinyang, rx, ry, 32, 32);
 	al_draw_rotated_bitmap(frameL, 16, 16, x - 50, y + 50, angle, 0);
@@ -166,7 +167,7 @@ void player::DrawPlayer(int xoffset, int yoffset)
 
 void player::UpdateSprites(int width, int height, int dir) {
 
-	//checks for iframes if just hit
+	//checks for iframes if just hit & go down the timer
 	if (iframes) {
 		iframeTimer--;
 		if (iframeTimer <= 0) {

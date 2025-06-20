@@ -43,6 +43,7 @@ int main()
     bool done = false;
     bool redraw = true;
     const int FPS = 60;
+
     bool gameOver = false; //	gameover check for drawing gameover text
     bool victory = false; //    checks if you actually WON!
     bool stageOneOver = false, stageTwoOver = false; //  //makes sure you only pass the stage once
@@ -73,9 +74,10 @@ int main()
     if (!al_init_acodec_addon()) {
         return -1;
     }
-    if (!al_reserve_samples(8)) {
+    if (!al_reserve_samples(16)) {
         return -1;
     }
+    //loads audio
     music = al_load_sample("septette.wav");
     play = al_load_sample("play.wav");
     dead = al_load_sample("dead.wav");
@@ -115,6 +117,7 @@ int main()
 
     al_start_timer(timer);
 
+    //loads backgrounds & menu intro
     bg = al_load_bitmap("background.png");
     moon = al_load_bitmap("moon.png");
 
@@ -123,6 +126,7 @@ int main()
 
     menuScreen = al_load_bitmap("menu.png");
 
+    //plays song
     al_play_sample(music, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 
     //game loop
@@ -131,7 +135,7 @@ int main()
         ALLEGRO_EVENT ev;
         al_wait_for_event(event_queue, &ev);
 
-        if (menu) { //keeps menu up until key is pressed
+        if (menu) {     //keeps menu up until key is pressed
             if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
                 menu = false;
                 al_play_sample(play, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
@@ -146,14 +150,16 @@ int main()
         }
         if (ev.type == ALLEGRO_EVENT_TIMER)
         {
-
+            //increases stage depending on score
             if (myPlayer.getScore() >= 40 && !stageOneOver) {
                 stage++;
                 stageOneOver = true;
+                al_play_sample(play, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
             }
             if (myPlayer.getScore() >= 80 && !stageTwoOver) {
                 stage++;
                 stageTwoOver = true;
+                al_play_sample(play, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
             }
 
             redraw = true;
@@ -178,7 +184,8 @@ int main()
             }
             if (idle) {
                 myPlayer.UpdateSprites(WIDTH, HEIGHT, 4);
-            }   //if not moving, player still animates
+            }   
+            // if not moving, player still animates
 
             // spawns the proper enemies depending on stage!
             if (stage == 1) {
@@ -207,6 +214,7 @@ int main()
                 for (int i = 0; i < enemiesStage2; i++)
                     enemies2[i].collideEnemy(myPlayer);
             }
+            //boss stage
             else if (stage == 3) {
                 for (int i = 0; i < numBullets; i++)
                     bullets[i].updateBullet(WIDTH);
@@ -227,6 +235,7 @@ int main()
                     al_play_sample(remdead, 0.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                 }
             }
+
             for (int i = 0; i < numBossBullets; i++)
                 bossBullets[i].fireBossBullet(bigboss);
 
@@ -263,6 +272,7 @@ int main()
                 keys[SPACE] = true;
                 for (int i = 0; i < numBullets; i++)
                     bullets[i].fireBullet(myPlayer);
+                al_play_sample(shoot, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);  //placeholder until I can get audio to play in classes
                 break;
             }
         }
@@ -294,13 +304,14 @@ int main()
         {
             redraw = false;
 
-            //background draw
+            //background draw with special animation if final stage
             scrollBackground();
             al_draw_bitmap(moon, 140, 40, 0);
             if (stage == 3) {
                 rotateMoon();
             }
 
+            //draw all sprites
             myPlayer.DrawPlayer(xOff, yOff);
             for (int i = 0; i < numBullets; i++) {
                 bullets[i].drawBullet();
@@ -323,6 +334,7 @@ int main()
                 }
             }
 
+            //if you die, this screen
             if (gameOver) {	
                 al_draw_text(gameoverFont, al_map_rgb(0, 0, 200), WIDTH / 2, HEIGHT / 2, ALLEGRO_ALIGN_CENTER, "GAME OVER!");
                 al_draw_textf(mainFont, al_map_rgb(255, 255, 255), WIDTH / 2, (HEIGHT / 2) + 100, ALLEGRO_ALIGN_CENTER, "FAIRIES DEFEATED: %i", myPlayer.getScore());
@@ -330,6 +342,7 @@ int main()
                 al_rest(5);
                 done = true;
             }
+            //if you win, this one :]
             if (victory) {
                 al_draw_text(gameoverFont, al_map_rgb(0, 0, 200), WIDTH / 2, HEIGHT / 2, ALLEGRO_ALIGN_CENTER, "VICTORY ACHIEVED!");
                 al_draw_text(mainFont, al_map_rgb(255, 255, 255), WIDTH / 2, (HEIGHT / 2) + 100, ALLEGRO_ALIGN_CENTER, "YOU'VE DEFEATED REMILIA SCARLET!");
@@ -338,6 +351,7 @@ int main()
                 al_rest(10);
                 done = true;
             }
+            //tells you which stage you're on at all times
             al_draw_textf(mainFont, al_map_rgb(255, 200, 255), 0, 0, 0, "STAGE %i", stage);
             al_flip_display();
             al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -372,6 +386,7 @@ void scrollBackground() {
     al_draw_bitmap(bg, 0, bg_y1, 0);
     al_draw_bitmap(bg, 0, bg_y2, 0);
 }
+//rotates the moon during the final stage
 void rotateMoon() {
     moonAngle += 0.007;
     al_draw_rotated_bitmap(moon, al_get_bitmap_width(moon) / 2.0, al_get_bitmap_width(moon) / 2.0, 400, 300, moonAngle, 0);

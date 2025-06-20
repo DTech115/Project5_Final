@@ -39,6 +39,7 @@ void bullet::drawBullet()
 		al_draw_bitmap(seal, x+20, y-50, 0);
 	}
 }
+//fires bullets from the player
 void bullet::fireBullet(player& Player)
 {
 	if (!live)
@@ -51,6 +52,7 @@ void bullet::fireBullet(player& Player)
 	}
 }
 
+//moves player's bullets up the screen
 void bullet::updateBullet(int WIDTH)
 {
 	if (live)
@@ -61,6 +63,8 @@ void bullet::updateBullet(int WIDTH)
 			live = false;
 	}
 }
+
+//draws the boss's bullet
 void bullet::drawBossBullet()
 {
 	if (live) {
@@ -70,6 +74,8 @@ void bullet::drawBossBullet()
 		al_draw_bitmap_region(orb, fx, fy, 64, 64, x + 10, y, 0);
 	}
 }
+
+//fires the boss's bullets into existence at random colors from the sheet
 void bullet::fireBossBullet(boss& Boss) {
 	//shoots an orb of a random dimension from the sheet
 	if (!live)
@@ -82,6 +88,8 @@ void bullet::fireBossBullet(boss& Boss) {
 		al_play_sample(remorb, 1.0, 0.0, 0.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 	}
 }
+
+//moves boss's bullets down the screen
 void bullet::updateBossBullet(int WIDTH) {
 	if (live) {
 		y += speed;
@@ -90,6 +98,8 @@ void bullet::updateBossBullet(int WIDTH) {
 		}
 	}
 }
+
+//checks if the player got hit by the boss's bullets
 void bullet::collidePlayerBullet(player& Player, int cSize) {
 	if (live && !Player.safe())
 	{
@@ -108,6 +118,7 @@ void bullet::collidePlayerBullet(player& Player, int cSize) {
 	}
 }
 
+//checks if normal enemies are hit by player's bullets
 void bullet::collideBullet(enemy enemy[], player& Player, int cSize)
 {
 	if (live)

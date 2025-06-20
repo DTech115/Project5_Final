@@ -21,9 +21,9 @@ public:
 	void increaseScore() { score++; }	//increases score :]
 	int getScore() { return score; }	//returns score!
 
-	bool safe() { return iframes; };
-	void setiframes() { iframes = true; }
-	void setiframeTimer() { iframeTimer = 60; }
+	bool safe() { return iframes; };	//gives back if the player is invincible
+	void setiframes() { iframes = true; }	//sets player to invincible
+	void setiframeTimer() { iframeTimer = 60; } //timer for how long player is invincible, 1 second
 private:
 	int x;
 	int y;

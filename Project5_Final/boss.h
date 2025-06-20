@@ -8,10 +8,12 @@
 class boss
 {
 public:
+    // states for boss movement!!!
     enum BossState {
         DOWN, LEFT, PAUSELEFT, RIGHT, PAUSERIGHT
     };
 
+    //similar to both player & enemy, poetic really
     boss();
     ~boss();
     void drawBoss();
@@ -32,8 +34,8 @@ private:
     int lives;
     int speed;
 
-    BossState state;
-    int pauseTimer;
+    BossState state;    //to track said state
+    int pauseTimer; //for how long boss should stop
 
     //animation stuff
     int maxFrame;

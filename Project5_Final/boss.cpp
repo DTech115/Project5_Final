@@ -52,6 +52,7 @@ void boss::drawBoss()
 	}
 }
 
+//summons boss above the screen for a dramatic entrance
 void boss::startBoss(int WIDTH, int HEIGHT)
 {
 	if (!alive) {
@@ -61,6 +62,9 @@ void boss::startBoss(int WIDTH, int HEIGHT)
 	}
 }
 
+//	makes the boss first move down until somewhere below the bottom of the screen at first.
+//	boss then moves all the way to the left, pauses for a bit, then all the way to the right, pauses
+//	boss then repeats, going back to the left
 void boss::updateBoss()
 {
 
@@ -108,6 +112,7 @@ void boss::updateBoss()
 	}
 
 }
+//checks if the player ran into the boss
 void boss::collideBoss(player& Player)
 {
 	if (alive && !Player.safe())

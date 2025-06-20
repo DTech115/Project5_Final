@@ -10,6 +10,7 @@
 
 enemy::enemy()
 {
+	hit = NULL;
 	cirno = al_load_bitmap("cirno_sheet.png");
 	cirno_dead = al_load_bitmap("cirno_dead.png");
 	live = false;
@@ -24,6 +25,9 @@ enemy::enemy()
 	animationColumns = 4;
 
 	hit = al_load_sample("hit.wav");
+	if (!hit) {
+		exit(9);
+	}
 
 }
 enemy::~enemy()

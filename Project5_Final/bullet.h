@@ -12,7 +12,7 @@ public:
 	bullet();
 	~bullet();
 	void drawBullet();
-	void drawBossBullet();
+	void drawBossBullet();	//draws boss's bullets
 	void fireBullet(player& player);
 	void updateBullet(int WIDTH);
 
