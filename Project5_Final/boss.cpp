@@ -15,7 +15,7 @@ boss::boss()
 	remilia = al_load_bitmap("remilia_sheet.png");
 	remilia_dead = al_load_bitmap("dead.png");
 	alive = false;
-	lives = 100;
+	lives = 500;
 	speed = 5;
 	state = DOWN;
 	pauseTimer = 0;

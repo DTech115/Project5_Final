@@ -57,6 +57,7 @@ int main()
     ALLEGRO_SAMPLE* play = NULL;
     ALLEGRO_SAMPLE* dead = NULL;
     ALLEGRO_SAMPLE* remdead = NULL;
+    ALLEGRO_SAMPLE* shoot = NULL;
 
     //Initialization Functions
     if (!al_init())										//initialize Allegro
@@ -80,6 +81,7 @@ int main()
     dead = al_load_sample("dead.wav");
     remdead = al_load_sample("remdead.wav");
     
+
     al_install_keyboard();
     al_init_image_addon();
     al_init_font_addon();
@@ -145,11 +147,11 @@ int main()
         if (ev.type == ALLEGRO_EVENT_TIMER)
         {
 
-            if (myPlayer.getScore() >= 3 && !stageOneOver) {
+            if (myPlayer.getScore() >= 40 && !stageOneOver) {
                 stage++;
                 stageOneOver = true;
             }
-            if (myPlayer.getScore() >= 6 && !stageTwoOver) {
+            if (myPlayer.getScore() >= 80 && !stageTwoOver) {
                 stage++;
                 stageTwoOver = true;
             }
